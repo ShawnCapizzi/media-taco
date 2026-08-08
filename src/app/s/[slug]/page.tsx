@@ -151,8 +151,11 @@ export default async function StandPage({
       <div className="keyline-grad mb-3" aria-hidden="true" />
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0">
-          <p className="eyebrow stand-eyebrow mb-2">
-            A Stand{stand.event_on ? ` · ${formatDate(stand.event_on + "T00:00:00")}` : ""}
+          <p className="eyebrow stand-eyebrow mb-2 flex items-center gap-3">
+            <span>
+              A Stand{stand.event_on ? ` · ${formatDate(stand.event_on + "T00:00:00")}` : ""}
+            </span>
+            <LiveRefresher seconds={15} />
           </p>
           <h1 className="font-head font-semibold text-3xl sm:text-5xl tracking-tight leading-[1.05]">
             {stand.title}
@@ -176,56 +179,66 @@ export default async function StandPage({
             {cards.length} {cards.length === 1 ? "Taco" : "Tacos"} on the Stand
           </p>
         </div>
-        <div className="flex items-center gap-3 shrink-0">
-          <LiveRefresher seconds={15} />
+        <div className="flex items-center gap-2.5 shrink-0">
+          <InviteToStand url={shareUrl} standTitle={stand.title} />
           <ShareButton url={shareUrl} title={stand.title} />
-          <InviteToStand
-            url={shareUrl}
-            standTitle={stand.title}
-          />
         </div>
       </div>
 
       {canContribute && (
-        <section className="card p-6 mt-8 border-2 border-verde bg-verde-soft/60 anim-fade-up">
-          <div className="keyline-grad mb-2" aria-hidden="true" />
-          <h2 className="font-head font-semibold text-xl sm:text-2xl">Add your Taco to this Stand</h2>
-          <p className="text-sm text-ink-soft mt-1">
-            Everyone brings their own. Pick a Taco you already made, or build a
-            new one for this Stand.
+        <section className="card p-6 sm:p-7 mt-8 rounded-2xl">
+          <h2 className="font-head font-semibold text-xl sm:text-2xl tracking-tight">
+            Add your Taco to this Stand
+          </h2>
+          <p className="text-[15px] text-ink-soft mt-1.5">
+            Everyone brings their own.
           </p>
-          <div className="mt-3" />
-          {myUnattached.length > 0 ? (
-            <div className="mt-3 flex flex-wrap gap-2">
-              {myUnattached.map((t) => (
-                <form key={t.id} action={attachTacoToStand}>
-                  <input type="hidden" name="stand_id" value={stand.id} />
-                  <input type="hidden" name="taco_id" value={t.id} />
-                  <input type="hidden" name="slug" value={stand.slug} />
-                  <button type="submit" className="btn btn-secondary text-sm">
-                    + {t.title || "Untitled"}
-                    {t.status === "draft" ? " (draft)" : ""}
-                  </button>
-                </form>
-              ))}
-            </div>
-          ) : (
-            <p className="text-sm text-ink-soft mt-2">
-              {attachedIds.size > 0 && rows.some((r) => r.creator_username === profile?.username)
-                ? "Your Taco is on the Stand."
-                : "You have no Tacos yet."}
-            </p>
-          )}
-          <p className="help mt-3">
-            Drafts you add stay visible only to you until you publish them.{" "}
+
+          <div className="mt-5">
             <Link
               href={`/create?stand=${stand.slug}`}
-              className="text-verde underline underline-offset-2 font-medium"
+              className="btn btn-primary w-full sm:w-auto"
             >
               Build a new Taco for this Stand
-            </Link>{" "}
-            and it lands here automatically when you publish.
-          </p>
+            </Link>
+            <p className="text-sm text-ink-soft mt-2">
+              It lands here automatically when you publish.
+            </p>
+          </div>
+
+          {myUnattached.length > 0 && (
+            <div className="mt-6 border-t border-line pt-4">
+              <p className="font-meta text-[11px] uppercase tracking-widest text-ink-soft mb-1">
+                Or add one you already made
+              </p>
+              <ul>
+                {myUnattached.map((t) => (
+                  <li
+                    key={t.id}
+                    className="flex items-center justify-between gap-4 py-2.5 border-b border-line last:border-b-0"
+                  >
+                    <span className="min-w-0 truncate text-[15px]">
+                      {t.title || "Untitled"}
+                      {t.status === "draft" && (
+                        <span className="text-ink-soft text-sm"> · draft</span>
+                      )}
+                    </span>
+                    <form action={attachTacoToStand} className="shrink-0">
+                      <input type="hidden" name="stand_id" value={stand.id} />
+                      <input type="hidden" name="taco_id" value={t.id} />
+                      <input type="hidden" name="slug" value={stand.slug} />
+                      <button type="submit" className="btn btn-secondary btn-sm">
+                        Add
+                      </button>
+                    </form>
+                  </li>
+                ))}
+              </ul>
+              <p className="text-sm text-ink-soft mt-2">
+                Drafts stay visible only to you until you publish them.
+              </p>
+            </div>
+          )}
         </section>
       )}
 

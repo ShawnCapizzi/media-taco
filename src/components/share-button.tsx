@@ -26,7 +26,7 @@ export function ShareButton({ url, title }: { url: string; title?: string }) {
   }
 
   return (
-    <button type="button" onClick={share} className="btn btn-primary text-sm">
+    <button type="button" onClick={share} className="btn btn-secondary text-sm">
       {copied ? "Link copied" : "Share"}
     </button>
   );

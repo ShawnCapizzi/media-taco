@@ -275,3 +275,26 @@ from small to base text with relaxed leading, the numbered steps grew, the
 Join button gained size and padding, and a reassurance line ("Takes about
 two minutes. Free, no ads, 13 and up.") sits under the buttons. Larger
 targets, fewer doubts, same funnel.
+
+# Session 09 additions
+
+## 35. Reduction pass: one action per zone
+The Stand header carried three floating controls in mixed styles. Now: the
+LIVE indicator lives quietly inside the eyebrow line, and the header holds
+exactly one action pair, Invite (primary, because at an event the owner's
+job is filling the room) and Share (secondary). The contribute box leads
+with a single primary CTA, Build a new Taco for this Stand, followed by an
+"Or add one you already made" list where each Taco is a clean row with a
+small Add pill, replacing user-titled chip buttons that broke composition.
+
+## 36. Pill geometry and 44-point targets
+Buttons moved to full pill radius with a 44px minimum height (Apple HIG tap
+target), refined shadows, active-press scale, and a btn-sm variant for
+in-row actions. Form fields grew to match with a visible focus ring.
+Consistent geometry is most of what reads as "designed."
+
+## 37. Empty covers are designed, not missing
+The dead pale block with a lone letter became a monogram treatment: a
+deterministic gradient field chosen from four curated palette pairs by
+title hash, with a large Fraunces italic initial at low ink opacity. Stable
+per Taco, never AI, never stock, always composed.

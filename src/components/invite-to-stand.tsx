@@ -33,7 +33,7 @@ export function InviteToStand({
   }
 
   return (
-    <button type="button" onClick={invite} className="btn btn-secondary text-sm">
+    <button type="button" onClick={invite} className="btn btn-primary">
       {copied ? "Invite copied" : "Invite people to add"}
     </button>
   );

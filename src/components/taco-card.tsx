@@ -20,6 +20,20 @@ export interface TacoCardData {
   } | null;
 }
 
+// Curated cover fields for Tacos without an image: stable per title, drawn
+// from the palette so empty covers read as designed, never as missing.
+function coverGradient(title: string) {
+  const fields = [
+    "linear-gradient(135deg, #e7efe9 0%, #edf1fc 100%)",
+    "linear-gradient(135deg, #fdf0dc 0%, #e7efe9 100%)",
+    "linear-gradient(135deg, #edf1fc 0%, #fdf0dc 100%)",
+    "linear-gradient(135deg, #f3ece2 0%, #e7efe9 100%)",
+  ];
+  let h = 0;
+  for (let i = 0; i < title.length; i++) h = (h * 31 + title.charCodeAt(i)) >>> 0;
+  return fields[h % fields.length];
+}
+
 export function TacoCard({ taco }: { taco: TacoCardData }) {
   const initial = (taco.title || "T").trim().charAt(0).toUpperCase();
   const when = timeAgo(taco.published_at);
@@ -29,7 +43,7 @@ export function TacoCard({ taco }: { taco: TacoCardData }) {
       href={`/t/${taco.slug}`}
       className="card group block overflow-hidden transition-all duration-200 hover:border-verde hover:shadow-lift hover:-translate-y-0.5"
     >
-      <div className="aspect-[16/9] bg-verde-soft relative overflow-hidden">
+      <div className="aspect-[16/9] relative overflow-hidden">
         {taco.cover_url ? (
           // Covers come from user uploads and arbitrary hosts; plain img keeps the POC simple.
           // eslint-disable-next-line @next/next/no-img-element
@@ -39,9 +53,12 @@ export function TacoCard({ taco }: { taco: TacoCardData }) {
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.04]"
           />
         ) : (
-          <div className="h-full w-full flex items-center justify-center">
+          <div
+            className="h-full w-full flex items-center justify-center"
+            style={{ background: coverGradient(taco.title) }}
+          >
             <span
-              className="font-display text-5xl text-verde/50 transition-transform duration-300 group-hover:scale-110"
+              className="font-head italic font-semibold text-6xl text-ink/25 transition-transform duration-500 group-hover:scale-105 select-none"
               aria-hidden="true"
             >
               {initial}

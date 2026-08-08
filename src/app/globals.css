@@ -105,21 +105,31 @@ textarea:focus-visible {
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  border-radius: 8px;
-  padding: 0.55rem 1.1rem;
-  font-size: 0.9rem;
+  border-radius: 9999px;
+  min-height: 44px;
+  padding: 0.6rem 1.35rem;
+  font-size: 0.95rem;
   font-weight: 600;
+  letter-spacing: -0.01em;
   border: 1px solid transparent;
-  transition: background-color 120ms ease, border-color 120ms ease;
+  transition: background-color 140ms ease, border-color 140ms ease,
+    transform 100ms ease, box-shadow 140ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn:active {
+  transform: scale(0.98);
 }
 
 .btn-primary {
   background: var(--verde);
   color: #ffffff;
+  box-shadow: 0 1px 2px rgba(31, 61, 44, 0.25), 0 4px 14px rgba(31, 61, 44, 0.12);
 }
 .btn-primary:hover {
   background: var(--verde-deep);
+  box-shadow: 0 1px 2px rgba(31, 61, 44, 0.3), 0 6px 18px rgba(31, 61, 44, 0.16);
 }
 
 .btn-secondary {
@@ -129,16 +139,39 @@ textarea:focus-visible {
 }
 .btn-secondary:hover {
   border-color: var(--ink-soft);
+  background: #ffffff;
+}
+
+.btn-quiet {
+  background: transparent;
+  color: var(--ink-soft);
+}
+.btn-quiet:hover {
+  color: var(--ink);
+  background: rgba(34, 30, 24, 0.05);
+}
+
+.btn-sm {
+  min-height: 36px;
+  padding: 0.35rem 0.95rem;
+  font-size: 0.85rem;
 }
 
 .field {
   width: 100%;
   background: var(--raised);
   border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 0.55rem 0.75rem;
-  font-size: 0.95rem;
+  border-radius: 12px;
+  padding: 0.7rem 0.9rem;
+  font-size: 1rem;
+  min-height: 44px;
   color: var(--ink);
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+.field:focus {
+  outline: none;
+  border-color: var(--verde);
+  box-shadow: 0 0 0 3px rgba(45, 90, 61, 0.15);
 }
 .field::placeholder {
   color: #a39a8c;
