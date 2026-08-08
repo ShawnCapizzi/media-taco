@@ -88,3 +88,30 @@ export async function deleteStand(formData: FormData): Promise<void> {
   await logEvent("stand_deleted", "stand", standId);
   redirect("/stands");
 }
+
+// Attaches a Taco to a Stand identified by slug, for the create-from-Stand
+// flow. RLS still enforces every rule (own Taco only, open Stand or yours).
+// A duplicate attach is treated as success.
+export async function attachTacoToStandBySlug(
+  tacoId: string,
+  slug: string
+): Promise<{ ok: boolean }> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { ok: false };
+
+  const { data } = await supabase.rpc("get_stand_by_slug", { p_slug: slug });
+  const stand = Array.isArray(data) ? data[0] : null;
+  if (!stand) return { ok: false };
+
+  const { error } = await supabase.from("stand_tacos").insert({
+    stand_id: stand.id,
+    taco_id: tacoId,
+    added_by: user.id,
+  });
+  if (error && !error.message.includes("duplicate")) return { ok: false };
+  revalidatePath(`/s/${slug}`);
+  return { ok: true };
+}

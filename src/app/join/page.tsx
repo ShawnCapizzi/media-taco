@@ -6,9 +6,10 @@ export const metadata = { title: "Join" };
 export default async function JoinPage({
   searchParams,
 }: {
-  searchParams: Promise<{ code?: string }>;
+  searchParams: Promise<{ code?: string; next?: string }>;
 }) {
-  const { code } = await searchParams;
+  const { code, next } = await searchParams;
+  const safeNext = next && next.startsWith("/") ? next : "";
 
   return (
     <div className="mx-auto max-w-md px-4 py-14">
@@ -20,10 +21,13 @@ export default async function JoinPage({
         Media Taco is for people 13 and older. Have a founding invitation code?
         Enter it below and your account gets Founding Table permissions.
       </p>
-      <JoinForm inviteCode={code ?? ""} />
+      <JoinForm inviteCode={code ?? ""} next={safeNext} />
       <p className="text-sm text-ink-soft mt-6">
         Already a member?{" "}
-        <Link href="/login" className="text-verde underline underline-offset-2">
+        <Link
+          href={safeNext ? `/login?next=${encodeURIComponent(safeNext)}` : "/login"}
+          className="text-verde underline underline-offset-2"
+        >
           Sign in
         </Link>
       </p>

@@ -10,11 +10,15 @@ export const metadata = { title: "Create a Taco" };
 export default async function CreatePage({
   searchParams,
 }: {
-  searchParams: Promise<{ taco?: string; error?: string }>;
+  searchParams: Promise<{ taco?: string; error?: string; stand?: string }>;
 }) {
+  const { taco: tacoId, error, stand } = await searchParams;
   const profile = await getCurrentProfile();
-  if (!profile) redirect("/login?next=/create");
-  const { taco: tacoId, error } = await searchParams;
+  if (!profile) {
+    redirect(
+      stand ? `/login?next=${encodeURIComponent(`/create?stand=${stand}`)}` : "/login?next=/create"
+    );
+  }
 
   const supabase = await createClient();
   const { data: templates } = await supabase
@@ -56,6 +60,7 @@ export default async function CreatePage({
         draft={draft}
         initialIngredients={ingredients}
         userId={profile.id}
+        standSlug={stand ?? null}
       />
     </div>
   );

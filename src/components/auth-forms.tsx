@@ -12,7 +12,13 @@ import { CURRENT_YEAR, MIN_AGE } from "@/lib/core";
 
 const initialState: FormState = {};
 
-export function JoinForm({ inviteCode }: { inviteCode: string }) {
+export function JoinForm({
+  inviteCode,
+  next = "",
+}: {
+  inviteCode: string;
+  next?: string;
+}) {
   const [state, formAction, pending] = useActionState(joinAction, initialState);
 
   return (
@@ -105,6 +111,7 @@ export function JoinForm({ inviteCode }: { inviteCode: string }) {
       </div>
 
       <div>
+        <input type="hidden" name="next" value={next} />
         <label htmlFor="join-invite" className="label">
           Invitation code (optional)
         </label>

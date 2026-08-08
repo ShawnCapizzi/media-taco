@@ -50,18 +50,32 @@ export async function generateMetadata({
   const { data } = await supabase.rpc("get_stand_by_slug", { p_slug: slug });
   const stand = (Array.isArray(data) ? data[0] : null) as Stand | null;
   if (!stand) return { title: "Stand not found" };
+  const description =
+    stand.description ||
+    "A shared shelf on Media Taco: everyone adds their own small collection.";
   return {
     title: stand.title,
-    description: stand.description || "A shared Stand on Media Taco.",
+    description,
+    openGraph: {
+      title: `${stand.title} · Media Taco`,
+      description: `${description} Tap through to add your own Taco.`,
+      type: "website",
+      siteName: "Media Taco",
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/s/${slug}`,
+    },
   };
 }
 
 export default async function StandPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ code?: string; added?: string }>;
 }) {
   const { slug } = await params;
+  const { code, added } = await searchParams;
+  const codeQuery = code ? `code=${encodeURIComponent(code)}&` : "";
   const supabase = await createClient();
   const profile = await getCurrentProfile();
 
@@ -118,6 +132,15 @@ export default async function StandPage({
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
+      {added === "1" && (
+        <div className="alert p-4 mb-6">
+          <p className="text-sm">
+            <strong>Your Taco is on the Stand.</strong> Welcome to the shelf.
+            React to the others while you are here.
+          </p>
+        </div>
+      )}
+
       {stand.visibility !== "public" && (
         <div className="card p-3 mb-6 text-sm text-ink-soft">
           This Stand is {stand.visibility === "link" ? "shared by link only" : `${stand.visibility} visibility`}.
@@ -194,29 +217,58 @@ export default async function StandPage({
           )}
           <p className="help mt-3">
             Drafts you add stay visible only to you until you publish them.{" "}
-            <Link href="/create" className="text-verde underline underline-offset-2">
-              Build a new Taco
+            <Link
+              href={`/create?stand=${stand.slug}`}
+              className="text-verde underline underline-offset-2 font-medium"
+            >
+              Build a new Taco for this Stand
             </Link>{" "}
-            for this Stand.
+            and it lands here automatically when you publish.
           </p>
         </section>
       )}
 
       {!profile && (
-        <section className="card p-5 mt-8">
-          <p className="text-sm">
-            <Link
-              href={`/login?next=/s/${stand.slug}`}
-              className="text-verde underline underline-offset-2 font-medium"
-            >
-              Sign in
-            </Link>{" "}
-            or{" "}
-            <Link href="/join" className="text-verde underline underline-offset-2 font-medium">
-              join
-            </Link>{" "}
-            to add your own Taco to this Stand.
+        <section className="card p-6 sm:p-8 mt-8 border-2 border-verde bg-verde-soft/50 anim-fade-up">
+          <div className="keyline-grad mb-3" aria-hidden="true" />
+          <p className="eyebrow mb-2">This is a Stand: a shared shelf</p>
+          <h2 className="font-display text-xl sm:text-2xl tracking-tight leading-snug">
+            Were you there? Add your own Taco to this Stand.
+          </h2>
+          <p className="text-sm text-ink-soft mt-2 max-w-xl">
+            Everyone who was part of it adds their own small collection: a
+            photo, the song that was playing, the line that stuck, and why it
+            mattered. Side by side, that becomes the memory of the whole
+            thing. No ads, no algorithm.
           </p>
+          <ol className="mt-4 space-y-2 text-sm max-w-xl">
+            <li className="flex gap-2">
+              <span className="font-display text-grad-blue shrink-0" aria-hidden="true">01</span>
+              <span>Join in about 30 seconds. An email and a birth year (13 and up).</span>
+            </li>
+            <li className="flex gap-2">
+              <span className="font-display text-grad-blue shrink-0" aria-hidden="true">02</span>
+              <span>Build your quick Taco of it: one photo, one song, one line is plenty.</span>
+            </li>
+            <li className="flex gap-2">
+              <span className="font-display text-grad-blue shrink-0" aria-hidden="true">03</span>
+              <span>It lands right here, next to everyone else&apos;s.</span>
+            </li>
+          </ol>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <Link
+              href={`/join?${codeQuery}next=${encodeURIComponent(`/s/${stand.slug}`)}`}
+              className="btn btn-primary"
+            >
+              Join and add your Taco
+            </Link>
+            <Link
+              href={`/login?next=${encodeURIComponent(`/s/${stand.slug}`)}`}
+              className="btn btn-secondary"
+            >
+              I am already a member
+            </Link>
+          </div>
         </section>
       )}
 
@@ -248,8 +300,8 @@ export default async function StandPage({
             <p className="text-sm text-ink-soft mt-2 max-w-md mx-auto">
               No Tacos yet. Build yours and be the first plate on the table.
             </p>
-            <Link href="/create" className="btn btn-primary mt-4">
-              Create a Taco
+            <Link href={`/create?stand=${stand.slug}`} className="btn btn-primary mt-4">
+              Create a Taco for this Stand
             </Link>
           </div>
         )}

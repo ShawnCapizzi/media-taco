@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { saveTacoDraft, publishTaco } from "@/app/actions/tacos";
+import { attachTacoToStandBySlug } from "@/app/actions/stands";
 import {
   deleteIngredient,
   reorderIngredients,
@@ -64,11 +65,13 @@ export function CreateWizard({
   draft,
   initialIngredients,
   userId,
+  standSlug = null,
 }: {
   templates: Template[];
   draft: Taco | null;
   initialIngredients: Ingredient[];
   userId: string;
+  standSlug?: string | null;
 }) {
   const router = useRouter();
   const [step, setStep] = useState<Step>(draft ? "build" : "template");
@@ -261,10 +264,18 @@ export function CreateWizard({
       return;
     }
     const result = await publishTaco(tacoId);
-    setPublishing(false);
     if (result.ok) {
+      // Came here from a Stand: put the new Taco on it and go back there.
+      if (standSlug) {
+        const attached = await attachTacoToStandBySlug(tacoId, standSlug);
+        setPublishing(false);
+        router.push(attached.ok ? `/s/${standSlug}?added=1` : `/t/${result.slug}`);
+        return;
+      }
+      setPublishing(false);
       router.push(`/t/${result.slug}`);
     } else {
+      setPublishing(false);
       setError(result.error);
     }
   }
@@ -318,6 +329,12 @@ export function CreateWizard({
   if (step === "build") {
     return (
       <div>
+        {standSlug && (
+          <div className="alert p-3 mb-4 text-sm">
+            <strong>Building for a Stand.</strong> Publish and this Taco lands
+            on the Stand automatically.
+          </div>
+        )}
         <div className="flex items-center justify-between gap-3">
           <p className="eyebrow">Step 2 of 3{template ? ` · ${template.name}` : ""}</p>
           <p className="font-meta text-xs text-ink-soft" aria-live="polite">

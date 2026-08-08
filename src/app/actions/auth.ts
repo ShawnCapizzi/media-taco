@@ -65,7 +65,8 @@ export async function joinAction(
     return { error: error.message };
   }
 
-  redirect("/home?welcome=1");
+  const nextPath = String(formData.get("next") ?? "");
+  redirect(nextPath.startsWith("/") ? nextPath : "/home?welcome=1");
 }
 
 export async function loginAction(

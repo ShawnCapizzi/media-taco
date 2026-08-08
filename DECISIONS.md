@@ -215,3 +215,28 @@ to, deduped, with is_owner true if you created it. Verified by execution
 with per-session auth: the owner sees their Stand as owner with the full
 taco count and their own count; a participant sees the same Stand as
 non-owner with their own count; a stranger sees nothing.
+
+# Session 07 additions
+
+## 28. The shared Stand link is the onboarding funnel
+A stranger tapping a Stand link from Facebook is the moment the product
+either explains itself or loses them. The signed-out Stand view now carries
+a full onboarding hero instead of one thin sign-in line: what a Stand is
+("everyone who was part of it adds their own small collection"), three
+numbered steps, and Join / Sign in buttons that carry the destination.
+Share links can carry an invite code: /s/<slug>?code=FOUNDING-TABLE threads
+the code into the Join button automatically.
+
+## 29. The loop closes: join returns you, publish attaches you
+Signup now honors a next parameter (path-only, validated), so joining from
+a Stand puts you back on that Stand. From there, "Build a new Taco for
+this Stand" opens the wizard with ?stand=<slug>; a banner says the Taco
+will land on the Stand; on publish, a new attachTacoToStandBySlug action
+attaches it (RLS still enforces every rule; duplicate attach is success)
+and returns you to the Stand with a welcome banner. One tap from Facebook
+to "your Taco is on the shelf" with no navigation knowledge required.
+
+## 30. Stands unfurl properly when shared
+Stand pages emit Open Graph tags (title, description with an "add your
+own" nudge, site URL), so the Facebook and iMessage link cards read like
+an invitation instead of a bare URL.
