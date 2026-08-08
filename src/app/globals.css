@@ -1,0 +1,269 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================================
+   Media Taco design tokens, v2
+   White-forward surfaces on a sandy paper base, pops of market
+   color, one deep-blue gradient for the 5 percent of 80s edge.
+   ============================================================= */
+
+:root {
+  /* Base: sand and white */
+  --masa: #faf7f1;
+  --raised: #ffffff;
+  --line: #e5dcc7;
+  --ink: #221e18;
+  --ink-soft: #6f665a;
+
+  /* Market greens */
+  --verde: #2e6b4f;
+  --verde-deep: #1f4e39;
+  --verde-soft: #e6f0e9;
+  --avocado: #7fa33c;
+  --avocado-deep: #55712a;
+  --avocado-soft: #eff5e0;
+
+  /* Warm pops */
+  --mango: #f5a623;
+  --mango-deep: #a8680a;
+  --mango-soft: #fff3dc;
+  --chile: #c74e24;
+  --chile-soft: #fbe9e0;
+
+  /* 80s deep blue, always with a gradient available */
+  --blue: #1e33a8;
+  --blue-deep: #14207a;
+  --violet: #7a3bdb;
+  --grad-blue: linear-gradient(135deg, #14207a 0%, #2438c8 48%, #7a3bdb 100%);
+  --grad-sunset: linear-gradient(135deg, #c74e24 0%, #f5a623 100%);
+
+  /* Type roles */
+  --font-display: var(--font-michroma), "Arial Black", sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-meta: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-note: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+}
+
+html {
+  background-color: var(--masa);
+  color: var(--ink);
+}
+
+/* Sandy paper texture: inline SVG grain, kept faint on purpose */
+body {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  background-color: var(--masa);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: var(--mango-soft);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--verde);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Michroma is wide by design; keep display sizes honest */
+.font-display,
+.font-display * {
+  letter-spacing: -0.01em;
+}
+
+/* Shared primitives */
+.eyebrow {
+  font-family: var(--font-meta);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--verde);
+}
+
+.card {
+  background: var(--raised);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 8px;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.btn-primary {
+  background: var(--verde);
+  color: #ffffff;
+}
+.btn-primary:hover {
+  background: var(--verde-deep);
+}
+
+.btn-secondary {
+  background: var(--raised);
+  color: var(--ink);
+  border-color: var(--line);
+}
+.btn-secondary:hover {
+  border-color: var(--ink-soft);
+}
+
+.field {
+  width: 100%;
+  background: var(--raised);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+.field::placeholder {
+  color: #a39a8c;
+}
+
+.label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.3rem;
+}
+
+.help {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  margin-top: 0.25rem;
+}
+
+/* Signature element: the margin note. Context outranks content.
+   Stays in a serif italic on purpose: the human voice against
+   Michroma's machine voice. */
+.why-note {
+  border-left: 3px solid var(--verde);
+  padding-left: 0.9rem;
+  font-family: var(--font-note);
+  font-style: italic;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--verde-deep);
+}
+
+/* The 5 percent: gradient keylines and one gradient word */
+.keyline-grad {
+  height: 3px;
+  width: 44px;
+  border-radius: 2px;
+  background: var(--grad-blue);
+}
+
+.text-grad-blue {
+  background: var(--grad-blue);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-grad-blue {
+  background: var(--grad-blue);
+}
+
+.bg-grad-sunset {
+  background: var(--grad-sunset);
+}
+
+/* Colored pop chips */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 0.15rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+.chip-mango {
+  background: var(--mango-soft);
+  color: var(--mango-deep);
+  border-color: rgba(245, 166, 35, 0.35);
+}
+.chip-avocado {
+  background: var(--avocado-soft);
+  color: var(--avocado-deep);
+  border-color: rgba(127, 163, 60, 0.35);
+}
+.chip-blue {
+  background: #e9ecfb;
+  color: var(--blue-deep);
+  border-color: rgba(30, 51, 168, 0.25);
+}
+
+/* Interaction layer */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.anim-fade-up {
+  animation: fade-up 0.55s ease-out both;
+}
+.anim-delay-1 { animation-delay: 90ms; }
+.anim-delay-2 { animation-delay: 180ms; }
+.anim-delay-3 { animation-delay: 270ms; }
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+/* Alert surface: burnt orange with ink text, impossible to miss */
+:root {
+  --alert: #e8862e;
+}
+.alert {
+  background: var(--alert);
+  color: var(--ink);
+  border: 1px solid rgba(34, 30, 24, 0.25);
+  border-radius: 10px;
+  font-weight: 500;
+}
+.alert a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 700;
+}
