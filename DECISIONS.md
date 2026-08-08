@@ -298,3 +298,17 @@ The dead pale block with a lone letter became a monogram treatment: a
 deterministic gradient field chosen from four curated palette pairs by
 title hash, with a large Fraunces italic initial at low ink opacity. Stable
 per Taco, never AI, never stock, always composed.
+
+# Session 10 additions
+
+## 38. Shared links must read as the event, not the deployment
+Texted Stand links were previewing as the raw vercel.app deployment URL.
+Three fixes: (1) metadataBase is now set from NEXT_PUBLIC_SITE_URL (falling
+back to https://mediataco.com), so Next resolves all Open Graph URLs against
+the real domain; (2) the Stand share URL and OG url fall back to
+mediataco.com if the env var is wrong; (3) ShareButton and InviteToStand
+carry the Stand title in the message body and text field, so even when a
+phone does not render the rich preview, the SMS reads "No Sleep Till
+Brookfield 5 on Media Taco" above the link instead of a bare ugly URL. The
+remaining requirement is operational: NEXT_PUBLIC_SITE_URL in Vercel must be
+https://mediataco.com, and links should be shared from the custom domain.

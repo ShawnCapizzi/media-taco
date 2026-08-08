@@ -22,6 +22,9 @@ const fraunces = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://mediataco.com"
+  ),
   title: {
     default: "Media Taco Community",
     template: "%s | Media Taco",

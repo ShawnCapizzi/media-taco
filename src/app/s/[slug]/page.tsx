@@ -61,7 +61,7 @@ export async function generateMetadata({
       description: `${description} Tap through to add your own Taco.`,
       type: "website",
       siteName: "Media Taco",
-      url: `${process.env.NEXT_PUBLIC_SITE_URL}/s/${slug}`,
+      url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://mediataco.com"}/s/${slug}`,
     },
   };
 }
@@ -128,7 +128,8 @@ export default async function StandPage({
     reactionCount: Number(r.reaction_count),
   }));
 
-  const shareUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/s/${stand.slug}`;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mediataco.com";
+  const shareUrl = `${siteUrl}/s/${stand.slug}`;
 
   return (
     <div className="stand-world -mt-0">

@@ -5,11 +5,16 @@ import { useState } from "react";
 export function ShareButton({ url, title }: { url: string; title?: string }) {
   const [copied, setCopied] = useState(false);
 
+  // The title carried in the message body so it reads well in SMS, where the
+  // rich link preview is not guaranteed to render.
+  const label = title ? `${title} on Media Taco` : "A Taco on Media Taco";
+  const text = `${label}\n${url}`;
+
   async function share() {
     // Native share sheet on devices that have one (most phones and tablets)
     if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
       try {
-        await navigator.share({ title: title ?? "A Taco on Media Taco", url });
+        await navigator.share({ title: label, text: label, url });
         return;
       } catch (err) {
         // User closed the sheet: do nothing. Anything else: fall through to copy.
@@ -17,11 +22,11 @@ export function ShareButton({ url, title }: { url: string; title?: string }) {
       }
     }
     try {
-      await navigator.clipboard.writeText(url);
+      await navigator.clipboard.writeText(text);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      window.prompt("Copy this link:", url);
+      window.prompt("Copy this link:", text);
     }
   }
 
