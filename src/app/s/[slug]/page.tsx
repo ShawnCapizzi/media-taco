@@ -131,7 +131,8 @@ export default async function StandPage({
   const shareUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/s/${stand.slug}`;
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10">
+    <div className="stand-world -mt-0">
+      <div className="mx-auto max-w-6xl px-4 py-10">
       {added === "1" && (
         <div className="alert p-4 mb-6">
           <p className="text-sm">
@@ -150,10 +151,10 @@ export default async function StandPage({
       <div className="keyline-grad mb-3" aria-hidden="true" />
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0">
-          <p className="eyebrow mb-2">
+          <p className="eyebrow stand-eyebrow mb-2">
             A Stand{stand.event_on ? ` · ${formatDate(stand.event_on + "T00:00:00")}` : ""}
           </p>
-          <h1 className="font-display text-2xl sm:text-4xl tracking-tight leading-tight">
+          <h1 className="font-head font-semibold text-3xl sm:text-5xl tracking-tight leading-[1.05]">
             {stand.title}
           </h1>
           {stand.description && (
@@ -188,7 +189,7 @@ export default async function StandPage({
       {canContribute && (
         <section className="card p-6 mt-8 border-2 border-verde bg-verde-soft/60 anim-fade-up">
           <div className="keyline-grad mb-2" aria-hidden="true" />
-          <h2 className="font-display text-lg sm:text-xl">Add your Taco to this Stand</h2>
+          <h2 className="font-head font-semibold text-xl sm:text-2xl">Add your Taco to this Stand</h2>
           <p className="text-sm text-ink-soft mt-1">
             Everyone brings their own. Pick a Taco you already made, or build a
             new one for this Stand.
@@ -229,19 +230,19 @@ export default async function StandPage({
       )}
 
       {!profile && (
-        <section className="card p-6 sm:p-8 mt-8 border-2 border-verde bg-verde-soft/50 anim-fade-up">
+        <section className="card p-6 sm:p-8 mt-8 border-2 bg-raised" style={{ borderColor: "var(--blue)" }}>
           <div className="keyline-grad mb-3" aria-hidden="true" />
-          <p className="eyebrow mb-2">This is a Stand: a shared shelf</p>
-          <h2 className="font-display text-xl sm:text-2xl tracking-tight leading-snug">
+          <p className="eyebrow stand-eyebrow mb-2">This is a Stand: a shared shelf</p>
+          <h2 className="font-head font-semibold text-2xl sm:text-3xl tracking-tight leading-snug">
             Were you there? Add your own Taco to this Stand.
           </h2>
-          <p className="text-sm text-ink-soft mt-2 max-w-xl">
+          <p className="text-base text-ink-soft mt-3 max-w-xl leading-relaxed">
             Everyone who was part of it adds their own small collection: a
             photo, the song that was playing, the line that stuck, and why it
             mattered. Side by side, that becomes the memory of the whole
             thing. No ads, no algorithm.
           </p>
-          <ol className="mt-4 space-y-2 text-sm max-w-xl">
+          <ol className="mt-5 space-y-3 text-base max-w-xl">
             <li className="flex gap-2">
               <span className="font-display text-grad-blue shrink-0" aria-hidden="true">01</span>
               <span>Join in about 30 seconds. An email and a birth year (13 and up).</span>
@@ -255,20 +256,23 @@ export default async function StandPage({
               <span>It lands right here, next to everyone else&apos;s.</span>
             </li>
           </ol>
-          <div className="mt-5 flex flex-wrap gap-3">
+          <div className="mt-6 flex flex-wrap gap-3">
             <Link
               href={`/join?${codeQuery}next=${encodeURIComponent(`/s/${stand.slug}`)}`}
-              className="btn btn-primary"
+              className="btn btn-primary text-base px-6 py-3"
             >
               Join and add your Taco
             </Link>
             <Link
               href={`/login?next=${encodeURIComponent(`/s/${stand.slug}`)}`}
-              className="btn btn-secondary"
+              className="btn btn-secondary text-base px-6 py-3"
             >
               I am already a member
             </Link>
           </div>
+          <p className="text-sm text-ink-soft mt-3">
+            Takes about two minutes. Free, no ads, 13 and up.
+          </p>
         </section>
       )}
 
@@ -306,6 +310,7 @@ export default async function StandPage({
           </div>
         )}
       </section>
+      </div>
     </div>
   );
 }

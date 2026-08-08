@@ -15,10 +15,11 @@ export default async function NewStandPage({
   const { error } = await searchParams;
 
   return (
+    <div className="stand-world">
     <div className="mx-auto max-w-xl px-4 py-12">
       <div className="keyline-grad mb-3" aria-hidden="true" />
       <p className="eyebrow mb-2">A shared shelf of Tacos</p>
-      <h1 className="font-display text-2xl sm:text-3xl tracking-tight">
+      <h1 className="font-head font-semibold text-3xl sm:text-4xl tracking-tight">
         Open a <span className="text-grad-blue">Stand</span>
       </h1>
       <p className="text-sm text-ink-soft mt-2 max-w-md">
@@ -95,6 +96,7 @@ export default async function NewStandPage({
           Open the Stand
         </button>
       </form>
+    </div>
     </div>
   );
 }

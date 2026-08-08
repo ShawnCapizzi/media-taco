@@ -232,7 +232,14 @@ textarea:focus-visible {
   }
 }
 .anim-fade-up {
-  animation: fade-up 0.55s ease-out both;
+  animation: fade-up 0.55s ease-out forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade-up {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 .anim-delay-1 { animation-delay: 90ms; }
 .anim-delay-2 { animation-delay: 180ms; }
@@ -266,4 +273,19 @@ textarea:focus-visible {
   text-decoration: underline;
   text-underline-offset: 2px;
   font-weight: 700;
+}
+
+/* ---- The Stand world: Stands are the shared space, and they read cool
+   blue against the warm cream of the rest of the site. ---- */
+:root {
+  --stand-tint: #edf1fc;
+  --stand-deep: #22336e;
+}
+.stand-world {
+  background:
+    linear-gradient(180deg, var(--stand-tint) 0%, rgba(237, 241, 252, 0) 460px),
+    var(--masa);
+}
+.stand-eyebrow {
+  color: var(--blue);
 }

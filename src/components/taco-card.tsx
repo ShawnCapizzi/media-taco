@@ -60,7 +60,7 @@ export function TacoCard({ taco }: { taco: TacoCardData }) {
         )}
       </div>
       <div className="p-4">
-        <h3 className="font-display text-base leading-snug group-hover:text-verde-deep transition-colors">
+        <h3 className="font-head font-semibold text-lg leading-snug group-hover:text-verde-deep transition-colors">
           {taco.title || "Untitled Taco"}
         </h3>
         {taco.description && (

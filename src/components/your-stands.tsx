@@ -33,7 +33,7 @@ export async function YourStands({ heading = true }: { heading?: boolean }) {
           <div>
             <div className="keyline-grad mb-2" aria-hidden="true" />
             <p className="eyebrow mb-1">Yours</p>
-            <h2 className="font-display text-xl sm:text-2xl tracking-tight">Your Stands</h2>
+            <h2 className="font-head font-semibold text-2xl sm:text-3xl tracking-tight">Your Stands</h2>
           </div>
           <Link href="/stands/new" className="btn btn-secondary text-sm whitespace-nowrap">
             Open a Stand
@@ -57,7 +57,7 @@ export async function YourStands({ heading = true }: { heading?: boolean }) {
                 </span>
               )}
             </div>
-            <h3 className="font-display text-base leading-snug mt-2 group-hover:text-verde-deep transition-colors">
+            <h3 className="font-head font-semibold text-lg leading-snug mt-2 group-hover:text-verde-deep transition-colors">
               {s.title}
             </h3>
             <p className="text-xs text-ink-soft mt-2">

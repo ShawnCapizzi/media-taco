@@ -12,6 +12,15 @@ const michroma = localFont({
   variable: "--font-michroma",
 });
 
+// Fraunces, self-hosted under the SIL Open Font License. Warm editorial
+// headline voice to pair with Michroma's technical brand voice.
+const fraunces = localFont({
+  src: "../fonts/Fraunces-Variable.ttf",
+  weight: "100 900",
+  display: "swap",
+  variable: "--font-head",
+});
+
 export const metadata: Metadata = {
   title: {
     default: "Media Taco Community",
@@ -25,7 +34,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={michroma.variable}>
+    <html lang="en" className={`${michroma.variable} ${fraunces.variable}`}>
       <body className="min-h-screen flex flex-col">
         <SiteNav />
         <main id="main" className="flex-1">

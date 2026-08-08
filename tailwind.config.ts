@@ -27,6 +27,7 @@ const config: Config = {
       },
       fontFamily: {
         display: ["var(--font-display)"],
+        head: ["var(--font-head)", "Georgia", "serif"],
         body: ["var(--font-body)"],
         meta: ["var(--font-meta)"],
         note: ["var(--font-note)"],

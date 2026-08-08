@@ -45,7 +45,7 @@ export function MobileMenu({ profile }: { profile: MenuProfile | null }) {
             onClick={() => setOpen(false)}
             className="absolute inset-0 bg-ink/40"
           />
-          <div className="absolute right-0 top-0 h-full w-[82%] max-w-xs bg-raised shadow-lift p-4 overflow-y-auto anim-fade-up">
+          <div className="absolute right-0 top-0 h-full w-[82%] max-w-xs bg-raised shadow-lift p-4 overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
               <span className="font-display text-lg">
                 Media<span className="text-chile">.</span>

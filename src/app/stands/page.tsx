@@ -26,10 +26,11 @@ export default async function StandsPage() {
   const stands = (data ?? []) as StandRow[];
 
   return (
+    <div className="stand-world">
     <div className="mx-auto max-w-6xl px-4 py-10">
       <div className="keyline-grad mb-3" aria-hidden="true" />
-      <p className="eyebrow mb-2">Group collections</p>
-      <h1 className="font-display text-2xl sm:text-4xl tracking-tight uppercase leading-tight">
+      <p className="eyebrow stand-eyebrow mb-2">Group collections</p>
+      <h1 className="font-head font-semibold text-3xl sm:text-5xl tracking-tight leading-[1.05]">
         Stands
       </h1>
       <p className="text-sm text-ink-soft mt-2 max-w-2xl">
@@ -69,7 +70,7 @@ export default async function StandsPage() {
                     </span>
                   )}
                 </div>
-                <h2 className="font-display text-base leading-snug mt-3 group-hover:text-verde-deep transition-colors">
+                <h2 className="font-head font-semibold text-lg leading-snug mt-3 group-hover:text-verde-deep transition-colors">
                   {s.title}
                 </h2>
                 {s.description && (
@@ -90,6 +91,7 @@ export default async function StandsPage() {
           />
         )}
       </div>
+    </div>
     </div>
   );
 }

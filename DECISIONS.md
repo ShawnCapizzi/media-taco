@@ -240,3 +240,38 @@ to "your Taco is on the shelf" with no navigation knowledge required.
 Stand pages emit Open Graph tags (title, description with an "add your
 own" nudge, site URL), so the Facebook and iMessage link cards read like
 an invitation instead of a bare URL.
+
+# Session 07 hotfix
+
+## 31. Mobile menu showed only the header
+The slide-in panel used anim-fade-up, whose keyframes start at opacity 0
+with animation-fill-mode both. When the panel mounted and the animation did
+not fire, the contents stayed at opacity 0, so only the statically painted
+"Media" header showed. Fix: removed anim-fade-up from the panel, changed the
+utility's fill-mode to forwards, and added a prefers-reduced-motion
+fallback that forces full visibility. Verified all nav links present and the
+panel no longer carries the animation class.
+
+# Session 08 additions
+
+## 32. Two-voice type system: Michroma and Fraunces
+Fraunces (variable, self-hosted, SIL OFL) joins Michroma. Michroma stays
+the brand and machine voice: the logo, page-level identity. Fraunces is the
+warm editorial voice: section headings, Taco and Stand card titles, and
+every headline in the Stand world. The pairing reads current to a younger
+audience and is far more comfortable at size for older eyes than a wide
+techno face.
+
+## 33. Stands are the blue world
+The rest of the site is warm cream and verde; Stand routes (/stands,
+/stands/new, /s/[slug]) open on a cool blue-tinted field that fades into
+the cream, with blue eyebrows and a blue-bordered onboarding hero. The
+shared space looks like a different room because it is one. Stand cards
+elsewhere already carried blue chips, so the association holds site-wide.
+
+## 34. Readability pass for the room
+Tuned for a 55-plus crowd on phones in a BBQ joint: the Stand hero moved
+from small to base text with relaxed leading, the numbered steps grew, the
+Join button gained size and padding, and a reassurance line ("Takes about
+two minutes. Free, no ads, 13 and up.") sits under the buttons. Larger
+targets, fewer doubts, same funnel.
